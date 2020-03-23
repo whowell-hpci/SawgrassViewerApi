@@ -62,7 +62,7 @@ namespace SawgrassViewerApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCors(c => c.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://vhpci-can.hpci.local", "http://10.100.60.65:91"));
+            app.UseCors(c => c.WithOrigins("http://vhpci-can.hpci.local", "http://10.100.60.65:91").AllowAnyHeader().AllowAnyMethod());
             app.UseRouting();
             
             app.UseAuthentication();
