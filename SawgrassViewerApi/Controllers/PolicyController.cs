@@ -34,6 +34,21 @@ namespace SawgrassViewerApi.Controllers
             return Ok(result);
         }
 
+        // GET: api/Policy/5
+        [HttpGet("named/{id}", Name = "GetByName")]
+        public IActionResult GetByName(string id)
+        {
+            var result = _repo.GetPolicyNumberByInsuredName(id);
+            return Ok(result);
+        }
+
+        [HttpPost("document")]
+        public IActionResult GetDocument(string id)
+        {
+            var data = _repo.GetInsuredNameByPolicyNumber(id);
+            return Ok(data.Documents);
+        }
+
         // POST: api/Policy
         [HttpPost]
         public void Post([FromBody] string value)

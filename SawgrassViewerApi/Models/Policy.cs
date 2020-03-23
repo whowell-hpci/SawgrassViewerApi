@@ -9,6 +9,8 @@ namespace SawgrassViewerApi.Models
     {
         public string PolicyNumber { get; set; }
         public string InsuredName { get; set; }
+
         public PolicyDocument[] Documents { get; set; }
+        public PolicyClaimDocument[] Claims { get; set; }
     }
 }
