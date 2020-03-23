@@ -32,11 +32,12 @@ namespace SawgrassViewerApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc(option => option.EnableEndpointRouting = false)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddControllers();
-            services.AddCors();
+            
             services.AddAutoMapper(typeof(AuthRepository).Assembly);
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IPolicyRepository, PolicyRepository>();
@@ -61,9 +62,9 @@ namespace SawgrassViewerApi
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseRouting();
             app.UseCors(c => c.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://vhpci-can.hpci.local", "http://10.100.60.65:91"));
+            app.UseRouting();
+            
             app.UseAuthentication();
             app.UseAuthorization();
 
