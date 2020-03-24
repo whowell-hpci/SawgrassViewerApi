@@ -23,8 +23,8 @@ namespace SawgrassViewerApi.Repositories
                 PolicyNumber = p.Policy,
                 DocType = p.DocType,
                 Url = p.AmazonS3ref,
-                //Year = GetYear(p.AmazonS3ref).Substring(0, 4),
-                //Month = GetYear(p.AmazonS3ref).Substring(4, 2)
+                Year = GetYear(p.AmazonS3ref).Substring(0,4),
+                Month = GetYear(p.AmazonS3ref).Substring(4,2)
 
             }).ToList();
 
