@@ -64,7 +64,7 @@ namespace SawgrassViewerApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(o => o.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(o => o.AllowAnyMethod().AllowAnyHeader());
             app.UseRouting();
             
             app.UseAuthentication();
