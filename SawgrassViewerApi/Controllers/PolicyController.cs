@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SawgrassViewerApi.Models;
@@ -27,6 +28,7 @@ namespace SawgrassViewerApi.Controllers
         }
 
         // GET: api/Policy/5
+        
         [HttpGet("{id}", Name = "Get")]
         public IActionResult Get(string id)
         {
@@ -35,13 +37,14 @@ namespace SawgrassViewerApi.Controllers
         }
 
         // GET: api/Policy/5
+        
         [HttpGet("named/{id}", Name = "GetByName")]
         public IActionResult GetByName(string id)
         {
             var result = _repo.GetPolicyNumberByInsuredName(id);
             return Ok(result);
         }
-
+        
         [HttpPost("document")]
         public IActionResult GetDocument(string id)
         {

@@ -27,6 +27,7 @@ namespace SawgrassViewerApi
             Configuration = configuration;
         }
 
+        
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -62,7 +63,8 @@ namespace SawgrassViewerApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCors(c => c.WithOrigins("http://localhost:4200", "http://vhpci-can.hpci.local:90", "http://10.100.60.65:90").AllowAnyHeader().AllowAnyMethod());
+
+            app.UseCors(o => o.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseRouting();
             
             app.UseAuthentication();
