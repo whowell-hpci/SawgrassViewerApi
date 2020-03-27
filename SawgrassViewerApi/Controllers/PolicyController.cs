@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SawgrassViewerApi.DTOs;
 using SawgrassViewerApi.Models;
 using SawgrassViewerApi.Repositories;
 
@@ -29,45 +30,46 @@ namespace SawgrassViewerApi.Controllers
 
         // GET: api/Policy/5
         
-        [HttpGet("{id}", Name = "Get")]
-        public IActionResult Get(string id)
-        {
-            var result = _repo.GetInsuredNameByPolicyNumber(id);
-            return Ok(result);
-        }
+        //[HttpGet("{id}", Name = "Get")]
+        //public IActionResult Get(string id)
+        //{
+           
+        //    var result = _repo.GetInsuredNameByPolicyNumber(id);
+        //    return Ok(result);
+        //}
 
-        // GET: api/Policy/5
+        //// GET: api/Policy/5
         
-        [HttpGet("named/{id}", Name = "GetByName")]
-        public IActionResult GetByName(string id)
-        {
-            var result = _repo.GetPolicyNumberByInsuredName(id);
-            return Ok(result);
-        }
+        //[HttpGet("named/{id}", Name = "GetByName")]
+        //public IActionResult GetByName(string id)
+        //{
+        //    var result = _repo.GetPolicyNumberByInsuredName(id);
+        //    return Ok(result);
+        //}
         
         [HttpPost("document")]
         public IActionResult GetDocument(string id)
         {
+            
             var data = _repo.GetInsuredNameByPolicyNumber(id);
             return Ok(data.Documents);
         }
 
         // POST: api/Policy
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] PolicyNumberDto body)
         {
+            if (body.Type == "number")
+            {
+                var data = _repo.GetInsuredNameByPolicyNumber(body.policyNumber);
+                return Ok(data);
+            }
+
+            var result = _repo.GetPolicyNumberByInsuredName(body.policyNumber);
+            return Ok(result);
+            
         }
 
-        // PUT: api/Policy/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        
     }
 }

@@ -22,12 +22,23 @@ namespace SawgrassViewerApi.Repositories
 
                 PolicyNumber = p.Policy,
                 DocType = p.DocType,
-                Url = p.AmazonS3ref,
-                Year = GetYear(p.AmazonS3ref).Substring(0,4),
-                Month = GetYear(p.AmazonS3ref).Substring(4,2)
+                Url = p.AmazonS3ref
+                
 
             }).ToList();
 
+            foreach (var doc in returnedDocs)
+            {
+                var year = GetYear(doc.Url);
+                if (year != "none")
+                {
+                    doc.Year = GetYear(doc.Url).Substring(0, 4);
+                } else
+                {
+                    doc.Year = "None";
+                }
+                
+            }
 
             return returnedDocs;
         }
@@ -40,10 +51,10 @@ namespace SawgrassViewerApi.Repositories
                 if (word.Length == 6 && word.StartsWith("2"))
                 {
                     return word;
-                }
+                } 
                 
             }
-            return null;
+            return "None";
         }
 
         public List<PolicyClaimDocument> GetPolicyClaimsDocumentsByPolicyNumber(string policyNumber)
@@ -57,6 +68,7 @@ namespace SawgrassViewerApi.Repositories
                 Month = GetYear(c.AmazonS32ref).Substring(4, 2)
             }).ToList();
 
+            
 
             return returnedClaims;
         }
