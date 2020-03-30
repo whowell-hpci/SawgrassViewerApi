@@ -11,5 +11,6 @@ namespace SawgrassViewerApi.Repositories
         List<PolicyDocument> GetPolicyDocumentsByPolicyNumber(string policyNumber);
         Policy GetInsuredNameByPolicyNumber(string policyNumber);
         Policy GetPolicyNumberByInsuredName(string insuredName);
+        Policy GetPolicyByClaimId(string claimId);
     }
 }

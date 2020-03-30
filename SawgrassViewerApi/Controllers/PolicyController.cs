@@ -61,11 +61,15 @@ namespace SawgrassViewerApi.Controllers
         {
             if (body.Type == "number")
             {
-                var data = _repo.GetInsuredNameByPolicyNumber(body.policyNumber);
+                var data = _repo.GetInsuredNameByPolicyNumber(body.SearchId);
+                return Ok(data);
+            } else if (body.Type == "claim") 
+            {
+                var data = _repo.GetPolicyByClaimId(body.SearchId);
                 return Ok(data);
             }
 
-            var result = _repo.GetPolicyNumberByInsuredName(body.policyNumber);
+            var result = _repo.GetPolicyNumberByInsuredName(body.SearchId);
             return Ok(result);
             
         }

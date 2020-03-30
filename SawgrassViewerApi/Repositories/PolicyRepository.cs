@@ -48,7 +48,7 @@ namespace SawgrassViewerApi.Repositories
             string[] words = url.Split('/');
             foreach (var word in words)
             {
-                if (word.Length == 6 && word.StartsWith("2"))
+                if (word.Length == 6 && word.StartsWith("20"))
                 {
                     return word;
                 } 
@@ -63,12 +63,26 @@ namespace SawgrassViewerApi.Repositories
                 PolicyId = c.PolicyId,
                 ClaimId = c.ClaimId,
                 DocType = c.DocType,
-                Url = c.AmazonS32ref,
-                Year = GetYear(c.AmazonS32ref).Substring(0, 4),
-                Month = GetYear(c.AmazonS32ref).Substring(4, 2)
+                Url = c.AmazonS32ref
             }).ToList();
 
-            
+            foreach (var claim in returnedClaims)
+            {
+                var year = GetYear(claim.Url);
+                if (year != "none")
+                {
+                    claim.Year = GetYear(claim.Url).Substring(0, 4);
+                }
+                else
+                {
+                    claim.Year = "None";
+                }
+
+            }
+
+            return returnedClaims;
+
+
 
             return returnedClaims;
         }
@@ -103,6 +117,21 @@ namespace SawgrassViewerApi.Repositories
             var claims = GetPolicyClaimsDocumentsByPolicyNumber(policy.PolicyNumber).ToArray();
             policy.Claims = claims;
 
+
+            return policy;
+        }
+
+        public Policy GetPolicyByClaimId(string claimId)
+        {
+            var data = _context.ClaimMaster.FirstOrDefault(c => c.ClaimId == claimId);
+            Policy policy = new Policy();
+            policy.PolicyNumber = data.PolicyId;
+            policy.InsuredName = data.InsuredName;
+
+            var docs = GetPolicyDocumentsByPolicyNumber(policy.PolicyNumber).ToArray();
+            policy.Documents = docs;
+            var claims = GetPolicyClaimsDocumentsByPolicyNumber(policy.PolicyNumber).ToArray();
+            policy.Claims = claims;
 
             return policy;
         }

@@ -7,7 +7,7 @@ namespace SawgrassViewerApi.DTOs
 {
     public class PolicyNumberDto
     {
-        public string policyNumber { get; set; }
+        public string SearchId { get; set; }
         public string Type { get; set; }
     }
 }
